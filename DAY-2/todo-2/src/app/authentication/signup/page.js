@@ -13,7 +13,7 @@ export default function SignUpPage() {
     setStatus({ type: "", message: "" });
 
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch("/api/v1/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -25,10 +25,16 @@ export default function SignUpPage() {
         throw new Error(data.message || "Unable to create account");
       }
 
-      setStatus({ type: "success", message: data.message || "Account created successfully." });
+      setStatus({
+        type: "success",
+        message: data.message || "Account created successfully.",
+      });
       setForm({ username: "", email: "", password: "" });
     } catch (error) {
-      setStatus({ type: "error", message: error.message || "Unable to create account." });
+      setStatus({
+        type: "error",
+        message: error.message || "Unable to create account.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -41,12 +47,17 @@ export default function SignUpPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a65b49]">
             Start today
           </p>
-          <h1 className="mt-3 text-3xl font-bold text-[#2d2a2a]">Create account</h1>
+          <h1 className="mt-3 text-3xl font-bold text-[#2d2a2a]">
+            Create account
+          </h1>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#4f403f]" htmlFor="username">
+            <label
+              className="mb-2 block text-sm font-medium text-[#4f403f]"
+              htmlFor="username"
+            >
               Username
             </label>
             <input
@@ -55,14 +66,22 @@ export default function SignUpPage() {
               type="text"
               required
               value={form.username}
-              onChange={(event) => setForm((current) => ({ ...current, username: event.target.value }))}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  username: event.target.value,
+                }))
+              }
               className="w-full rounded-2xl border border-[#e3cfbe] bg-[#f8f3ee] px-3 py-2.5 text-[#2d2a2a] outline-none transition focus:border-[#c77d63] focus:ring-4 focus:ring-[#f0d2c6]"
               placeholder="yourname"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#4f403f]" htmlFor="email">
+            <label
+              className="mb-2 block text-sm font-medium text-[#4f403f]"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -71,14 +90,22 @@ export default function SignUpPage() {
               type="email"
               required
               value={form.email}
-              onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  email: event.target.value,
+                }))
+              }
               className="w-full rounded-2xl border border-[#e3cfbe] bg-[#f8f3ee] px-3 py-2.5 text-[#2d2a2a] outline-none transition focus:border-[#c77d63] focus:ring-4 focus:ring-[#f0d2c6]"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#4f403f]" htmlFor="password">
+            <label
+              className="mb-2 block text-sm font-medium text-[#4f403f]"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -88,7 +115,12 @@ export default function SignUpPage() {
               minLength={6}
               required
               value={form.password}
-              onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  password: event.target.value,
+                }))
+              }
               className="w-full rounded-2xl border border-[#e3cfbe] bg-[#f8f3ee] px-3 py-2.5 text-[#2d2a2a] outline-none transition focus:border-[#c77d63] focus:ring-4 focus:ring-[#f0d2c6]"
               placeholder="At least 6 characters"
             />
@@ -97,7 +129,9 @@ export default function SignUpPage() {
           {status.message ? (
             <p
               className={`rounded-2xl px-3 py-2 text-sm ${
-                status.type === "success" ? "bg-[#e8f4ee] text-[#2f6d57]" : "bg-[#fbe7e8] text-[#8e4d52]"
+                status.type === "success"
+                  ? "bg-[#e8f4ee] text-[#2f6d57]"
+                  : "bg-[#fbe7e8] text-[#8e4d52]"
               }`}
               aria-live="polite"
             >

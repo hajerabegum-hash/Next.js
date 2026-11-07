@@ -1,5 +1,7 @@
 import { userModel } from "@/utils/db";
 
+export const dynamic = "force-dynamic";
+
 //server component
 export default async function Users() {
   const data = await userModel.find().select("-password");

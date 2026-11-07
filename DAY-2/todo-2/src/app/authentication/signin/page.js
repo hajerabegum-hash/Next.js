@@ -13,7 +13,7 @@ export default function SignInPage() {
     setStatus({ type: "", message: "" });
 
     try {
-      const response = await fetch("/api/signin", {
+      const response = await fetch("/api/v1/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -25,10 +25,16 @@ export default function SignInPage() {
         throw new Error(data.message || "Unable to sign in");
       }
 
-      setStatus({ type: "success", message: data.message || "Signed in successfully." });
+      setStatus({
+        type: "success",
+        message: data.message || "Signed in successfully.",
+      });
       setForm({ email: "", password: "" });
     } catch (error) {
-      setStatus({ type: "error", message: error.message || "Unable to sign in." });
+      setStatus({
+        type: "error",
+        message: error.message || "Unable to sign in.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -46,7 +52,10 @@ export default function SignInPage() {
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#4f403f]" htmlFor="email">
+            <label
+              className="mb-2 block text-sm font-medium text-[#4f403f]"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
@@ -55,14 +64,22 @@ export default function SignInPage() {
               type="email"
               required
               value={form.email}
-              onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  email: event.target.value,
+                }))
+              }
               className="w-full rounded-2xl border border-[#e3cfbe] bg-[#f8f3ee] px-3 py-2.5 text-[#2d2a2a] outline-none transition focus:border-[#c77d63] focus:ring-4 focus:ring-[#f0d2c6]"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-[#4f403f]" htmlFor="password">
+            <label
+              className="mb-2 block text-sm font-medium text-[#4f403f]"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
@@ -71,7 +88,12 @@ export default function SignInPage() {
               type="password"
               required
               value={form.password}
-              onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
+              onChange={(event) =>
+                setForm((current) => ({
+                  ...current,
+                  password: event.target.value,
+                }))
+              }
               className="w-full rounded-2xl border border-[#e3cfbe] bg-[#f8f3ee] px-3 py-2.5 text-[#2d2a2a] outline-none transition focus:border-[#c77d63] focus:ring-4 focus:ring-[#f0d2c6]"
               placeholder="••••••••"
             />
@@ -80,7 +102,9 @@ export default function SignInPage() {
           {status.message ? (
             <p
               className={`rounded-2xl px-3 py-2 text-sm ${
-                status.type === "success" ? "bg-[#e8f4ee] text-[#2f6d57]" : "bg-[#fbe7e8] text-[#8e4d52]"
+                status.type === "success"
+                  ? "bg-[#e8f4ee] text-[#2f6d57]"
+                  : "bg-[#fbe7e8] text-[#8e4d52]"
               }`}
               aria-live="polite"
             >
@@ -91,7 +115,7 @@ export default function SignInPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-2xl bg-[#c77d63] px-4 py-3 font-semibold text-white shadow-[0_12px_25px_rgba(199,125,99,0.35)] transition hover:bg-[#b96f57] disabled:cursor-not-allowed disabled:bg-[#d6a696]"
+            className="w-full rounded-full border border-[#d7b29a] bg-[#c77d63] px-4 py-3 font-semibold text-white shadow-[0_12px_28px_rgba(199,125,99,0.32)] transition hover:bg-[#b96f57] hover:text-white disabled:cursor-not-allowed disabled:bg-[#d6a696]"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </button>

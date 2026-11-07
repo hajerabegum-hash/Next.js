@@ -60,19 +60,45 @@
 //     ),
 //   );
 
-
 import mongoose from "mongoose";
+
+export async function connectDB() {
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is not defined");
+  }
+
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  await mongoose.connect(process.env.DATABASE_URL, {
+    dbName: "Docket",
+  });
+}
 
 export const userModel =
   mongoose.models.User ||
   mongoose.model(
     "User",
-    new mongoose.Schema({
-      username: String,
-      password: String,
-      email: String,
-    }),
+    new mongoose.Schema(
+      {
+        username: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        email: {
+          type: String,
+          required: true,
+          unique: true,
+          trim: true,
+          lowercase: true,
+        },
+        password: {
+          type: String,
+          required: true,
+        },
+      },
+      { timestamps: true },
+    ),
   );
-
-
-await mongoose.connect(process.env.DATABASE_URL)

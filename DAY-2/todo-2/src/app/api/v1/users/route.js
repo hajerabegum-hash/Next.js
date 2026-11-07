@@ -1,7 +1,12 @@
-import { useModel } from "@/src/utils/db";
 import { NextResponse } from "next/server";
+
+import { connectDB, userModel } from "@/utils/db";
+
 export async function GET() {
-  const data = await useModel.find().select("-password");
+  await connectDB();
+
+  const data = await userModel.find().select("-password");
+
   return NextResponse.json(
     { message: "Users fetched data successfully.", data },
     { status: 200 },
